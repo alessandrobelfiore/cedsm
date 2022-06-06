@@ -93,8 +93,8 @@ Short name | Long name               | Parameter description
 `-o`       | `--out-file arg`        | output file path (default = timings.txt)
 `-p`       | `--pattern-count arg`   | maximum number of patterns read from top of the patterns file (non-positive values are ignored)
 `-v`       | `--version`             | display version info
-           | `--cedsm`               | perform matching using CEDSM
-           | `--bndm`                | perform matching using BNDM-CEDS
+`\`        | `--cedsm`               | perform matching using CEDSM
+`\`        | `--bndm`                | perform matching using BNDM-CEDS
 
 ## Compile-time parameter description
 
