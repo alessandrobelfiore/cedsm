@@ -1,35 +1,20 @@
-## Basic information
+## CEDSM - Coloured Elastic Degenerate Strings Matching
 
-This software is called **SOPanG** (Shift-Or for Pan-Genome).
-It can be used for matching patterns in elastic-degenerate (ED) text (simplified pan-genome model).
-Authors for the current release version: Aleksander Cisłak, Szymon Grabowski.
-Authors of the SOPanG algorithm: Aleksander Cisłak, Szymon Grabowski, Jan Holub.
+The following work has been produced as my Master Thesis in Computer Science at the University of Pisa 2022.
+
+This application can be used for matching patterns in coloured elastic-degenerate (CED) text (simplified pan-genome model with information about sources).
+This work is an addition to the algorithm SOpanG, implementing the possibility to match using the algorithm CEDSM or BNDM-CEDS.
+
+The original SOpanG algorithm is:
 
 * Published as an applications note entitled *SOPanG: online text searching over a pan-genome* (Cisłak, Grabowski, Holub), Bioinformatics, Vol. 34, Issue 24, 12/2018, pp. 4290-4292. Link: https://doi.org/10.1093/bioinformatics/bty506
 * For the second version (follow-up work) see arXiv preprint entitled *SOPanG 2: online searching over a pan-genome without false positives* (Cisłak and Grabowski). Link: https://arxiv.org/abs/2004.03033
 
-ED text is in the following format: `{A,C,}GAAT{AT,A}ATT`.
-Braces determine the start and end of each non-deterministic segment (a segment having multiple variants), and commas delimit segment variants.
-If a comma is not preceded by a string of letters or it is a trailing symbol in a segment, it indicates an empty word.
-To give an example, all three notations: `{,A,C}`, `{A,,C}`, and `{A,C,}` mean the same, which is a segment which accepts either a string `A`, or a string `C`, or an empty word.
-Deterministic segments (i.e. segments having a single variant) are stored as regular contiguous strings.
-Note that, e.g., `{AC,CG}` and `{AC, CG}` are not the same (the latter would expect a space in its second variant).
-Therefore, you should not use whitespace characters in the ED text if not intended.
-For more information regarding this format, consult, e.g., *Efficient pattern matching in elastic-degenerate texts* (Iliopoulos et al., 2017).
+The original BNDM-EDS algorithm is
 
-SOPanG returns the end positions of pattern occurrences in the ED text.
-More precisely, it returns the set of segment indexes in which pattern occurrences end (without possible duplicates).
+* Published as an applications note entitled *Backward Pattern Matching on Elastic Degenerate Strings* (Petr Procházka. et al),Proceedings of the 14th International Joint Conference on Biomedical Engineering Systems and Technologies - BIOINFORMATICS, INSTICC. SciTePress, 2021, pp. 50–59. isbn: 978-989-758-490-9. doi: Link: https://doi.org/10.5220/0010243600500059.
 
-Below you can see the pattern search speed for individual human chromosomes (1-22) for matching with and without sources (see the following sections for more information).
-Pattern sizes of 8, 16, 32, and 64 characters were tested, without any noticeable differences between them.
-1 MB = 10^6 B, throughput measured with regard to the ED string size (delimiters not included).
-Intel i7-4930K@3.4 GHz, 64 GB DDR3 RAM.
-
-<p align="center">
-  <img src="pics/performance.png?raw=true" alt="Performance diagram" width="650"/>
-</p>
-
-#### Sources
+The description below follows from the original from the SOpanG repository, with some additions (https://github.com/MrAlexSee/sopang):
 
 The elastic-degenerate format which, in its original form, might contain paths not appearing in any genome can be extended with the sources file.
 Sources describe which individuals (strains) are associated with a given variant from the ED text.
@@ -59,6 +44,10 @@ It is based on variable-length differential coding and the use of [zstd](https:/
 We choose the following naming convention: `.eds` for ED text and `.edss` for the corresponding sources file, or `.edz` and `.edsz` for compressed versions of these files.
 In order to use SOPanG for matching with sources, supply the path to the sources file in the format described above via the parameter `-S` (see below for more information regarding the usage).
 
+## CEDSM and BNDM-CEDS
+
+We implement two novel algorithm that are able to match pattern on CEDS without incurring in false positives. The first one (CEDSM) is the augmentation of the SOpanG baseline algorithm with on-line operations on sources. The second one (BNDM-CEDS) is instead based upon the algorithm BNDM-EDS, and aims to achieve better performances than the previous CEDSM in settings where the text has a low variance and the patterns to be matched are long (m >= 32).
+
 ## Compilation
 
 Add Boost and zstd libraries to the path for compilation by setting `BOOST_DIR` and `ZSTD_DIR` in the makefile.
@@ -68,9 +57,7 @@ Requires support for the C++17 standard.
 Type `make` for optimized compile.
 Comment out `OPTFLAGS` in the makefile in order to disable optimization.
 
-Tested with gcc 64-bit 7.4.0 and Boost 1.67.0 (the latter is not performance-critical, used only for parameter and data parsing and formatting) on Ubuntu 17.10 Linux version 4.13.0-36 64-bit.
-
-A binary (compiled executable) for Linux is available in the release (file name `sopang`).
+Tested with gcc 64-bit 7.4.0 and Boost 1.67.0 (the latter is not performance-critical, used only for parameter and data parsing and formatting) on Ubuntu 20.04 Linux 64-bit.
 
 ## Usage
 
@@ -106,6 +93,8 @@ Short name | Long name               | Parameter description
 `-o`       | `--out-file arg`        | output file path (default = timings.txt)
 `-p`       | `--pattern-count arg`   | maximum number of patterns read from top of the patterns file (non-positive values are ignored)
 `-v`       | `--version`             | display version info
+           | `--cedsm`               | perform matching using CEDSM
+           | `--bndm`                | perform matching using BNDM-CEDS
 
 ## Compile-time parameter description
 
