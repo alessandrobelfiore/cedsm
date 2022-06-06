@@ -125,11 +125,8 @@ private:
 
     /* CEDS */
     uint64_t indexHitMask[wordSize];
-    /* std::vector<Sopang::SourceSet*> S;
-    std::vector<std::vector<Sopang::SourceSet*>> sBuffer; */
     Sopang::SourceSet* S[wordSize];
     Sopang::SourceSet* sBuffer[maxSourceCount][wordSize];
-
 
     const std::string alphabet;
     int sourceCount;
