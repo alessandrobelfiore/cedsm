@@ -5,3 +5,4 @@ scripts/parse_fasta_vcf_cpp/parse_fasta_vcf
 sopang
 unit_tests/main_tests
 timings.txt
+./results
