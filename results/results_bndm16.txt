@@ -1,0 +1,23 @@
+Throughput:	51.894332 MB/s
+Throughput:	50.770269 MB/s
+Throughput:	45.332616 MB/s
+Throughput:	46.376342 MB/s
+Throughput:	39.922988 MB/s
+
+Throughput:	39.435989 MB/s
+Throughput:	43.621582 MB/s
+Throughput:	39.800148 MB/s
+Throughput:	39.272020 MB/s
+Throughput:	35.339154 MB/s
+
+Throughput:	39.581780 MB/s
+Throughput:	38.075275 MB/s
+Throughput:	38.874449 MB/s
+Throughput:	37.778331 MB/s
+Throughput:	35.872946 MB/s
+
+Throughput:	36.783205 MB/s
+Throughput:	36.908791 MB/s
+Throughput:	36.149857 MB/s
+Throughput:	34.561376 MB/s
+Throughput:	32.381455 MB/s
